@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import UserCard from "./UserCard";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useSelector, useDispatch } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 const Feed = () => {
-  const dispatch = useDispatch();
   const feed = useSelector((store) => store.feed);
-  console.log(feed);
+  const dispatch = useDispatch();
   const getFeed = async () => {
     if (feed) return;
     try {
@@ -22,6 +21,13 @@ const Feed = () => {
   useEffect(() => {
     getFeed();
   }, []);
+  if (!feed) return;
+  if (feed.length <= 0)
+    return (
+      <h1 className="text-center justify-centre my-10">
+        No More Users To Show
+      </h1>
+    );
   return (
     feed && (
       <div className="flex justify-center my-10">

@@ -7,10 +7,10 @@ import axios from "axios";
 const EditProfile = ({ user }) => {
   const [firstName, setFirstName] = useState(user?.firstName);
   const [lastName, setLastName] = useState(user?.lastName);
-  const [age, setAge] = useState(user?.age);
-  const [gender, setGender] = useState(user?.gender);
-  const [about, setAbout] = useState(user?.about);
-  const [photoURL, setPhotoURL] = useState(user?.photoURL);
+  const [age, setAge] = useState(user?.age || "");
+  const [gender, setGender] = useState(user?.gender || "");
+  const [about, setAbout] = useState(user?.about || "");
+  const [photoURL, setPhotoURL] = useState(user?.photoURL || "");
   const [showToast, setShowToast] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
@@ -36,6 +36,7 @@ const EditProfile = ({ user }) => {
       }, 3000);
     } catch (err) {
       setError(err?.response?.data || "Something went wrong");
+      console.log(err);
     }
   };
   return (
@@ -65,7 +66,7 @@ const EditProfile = ({ user }) => {
                   />
                   <legend className="fieldset-legend">Age</legend>
                   <input
-                    type="text"
+                    type="number"
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
                     className="input"
